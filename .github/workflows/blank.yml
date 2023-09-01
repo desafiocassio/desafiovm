@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@v2 
 
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
+        uses: hashicorp/setup-terraform@v1 
         with:
           terraform_version: 1.0.0 # Substitua pela versão do Terraform que você deseja usar
 
