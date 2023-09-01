@@ -3,7 +3,7 @@ name: Provision Infrastructure and Calculate Costs
 on:
   push:
     branches:
-      - main 
+      - main # Substitua pela sua branch principal
 
 jobs:
   terraform:
@@ -16,7 +16,12 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
-          terraform_version:
+          terraform_version: 1.0.0 # Substitua pela versão do Terraform que você deseja usar
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Terraform Init
         run: terraform init
@@ -28,7 +33,7 @@ jobs:
         run: |
           # Execute o Infracost para calcular os custos
           infracost --tfdir ./ --format json > infracost-output.json
-        continue-on-error: true 
+        continue-on-error: true # Continuar mesmo se o Infracost encontrar um erro
 
       - name: Upload Infracost Report
         uses: actions/upload-artifact@v2
